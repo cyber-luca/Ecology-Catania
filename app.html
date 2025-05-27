@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappa Interattiva di Catania con Cestini</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <!-- Leaflet Control Geocoder CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <!-- Leaflet Pegman CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-pegman@1.0.0/leaflet-pegman.css" />
+    <!-- Il tuo CSS personalizzato -->
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:700,800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #eaffd0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="navbar-logo">Ecology Catania</div>
+        <ul class="navbar-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="#">Chi siamo</a></li>
+            <li><a href="#">Contatti</a></li>
+            <li><a href="#">Servizi</a></li>
+        </ul>
+    </nav>
+</header>
+    <h1>Mappa Percorsi</h1>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <!-- Leaflet Control Geocoder JS -->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <!-- Leaflet Pegman JS -->
+    <script src="https://unpkg.com/leaflet-pegman@1.0.0/leaflet-pegman.js"></script>
+
+    <script>
+        // Creazione della mappa e centro su Catania
+        var map = L.map('map', {
+            maxZoom: 18
+        }).setView([37.5079, 15.0830], 13); // Coordinate centrali di Catania
+
+        // Aggiungere il layer di OpenStreetMap alla mappa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Barra di ricerca
+        var geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            placeholder: "Cerca una zona di Catania...",
+            position: 'topright',
+            collapsed: false
+        })
+        .on('markgeocode', function(e) {
+            // Filtra i risultati per includere solo quelli che hanno "Catania" nell'indirizzo
+            var result = e.geocode;
+            if (
+                result &&
+                result.properties &&
+                (
+                    (result.properties.address && result.properties.address.city === "Catania") ||
+                    (result.properties.address && result.properties.address.town === "Catania") ||
+                    (result.properties.address && result.properties.address.village === "Catania") ||
+                    (result.html && result.html.includes("Catania"))
+                )
+            ) {
+                map.setView(result.center, 16);
+                var streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${result.center.lat},${result.center.lng}`;
+                L.marker(result.center).addTo(map)
+                    .bindPopup(`${result.name}<br><a href="${streetViewUrl}" target="_blank" style="color:#0078ff;font-weight:bold;">Street View</a>`)
+                    .openPopup();
+            } else {
+                alert("Per favore cerca solo zone di Catania.");
+            }
+        })
+        .addTo(map);
+
+        // Dati delle fermate della metro (coordinate indicative)
+        var metroStops = [
+            { name: "Stesicoro", lat: 37.5070, lon: 15.0835 },
+            { name: "Giovanni XXIII", lat: 37.5085, lon: 15.0850 },
+            { name: "Galatea", lat: 37.5095, lon: 15.0870 },
+            { name: "Giuffrida", lat: 37.5100, lon: 15.0890 }
+        ];
+
+        // Aggiungi un marker per ogni fermata della metro con un "cestino"
+        metroStops.forEach(function(stop) {
+            var marker = L.marker([stop.lat, stop.lon]).addTo(map);
+            var streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${stop.lat},${stop.lon}`;
+            marker.bindPopup(
+                `<b>${stop.name}</b><br>Qui c'è un cestino!<br>
+                <a href="${streetViewUrl}" target="_blank" style="color:#0078ff;font-weight:bold;">Street View</a>`
+            );
+        });
+
+        // Aggiungi la geolocalizzazione dell'utente
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var userLat = position.coords.latitude;
+                var userLon = position.coords.longitude;
+
+                // Aggiungi marker per la posizione dell'utente
+                var userMarker = L.marker([userLat, userLon]).addTo(map);
+                userMarker.bindPopup("Sei qui!");
+
+                // Centra la mappa sulla posizione dell'utente
+                map.setView([userLat, userLon], 13);
+
+                // Calcola il percorso più breve per il primo cestino
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(userLat, userLon),
+                        L.latLng(metroStops[0].lat, metroStops[0].lon)
+                    ],
+                    routeWhileDragging: true
+                }).addTo(map);
+            });
+        } else {
+            alert("Geolocalizzazione non supportata");
+        }
+
+        // Aggiungi Pegman (Street View) in basso a sinistra
+        var pegman = new L.Pegman({
+            position: 'bottomleft'
+        }).addTo(map);
+    </script>
+</body>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <strong>Seguici sui social:</strong><br>
+            <a href="https://www.instagram.com/greenmindai_hackathon/" target="_blank" class="footer-social">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="footer-icon">
+                Instagram GreenMINDAI Hackathon
+            </a>
+        </div>
+        <div class="footer-section">
+            <strong>Sede evento:</strong><br>
+            Università degli Studi di Catania<br>
+            Piazza Università, 2, 95131 Catania CT
+        </div>
+        <div class="footer-section">
+            <strong>Sponsor ufficiale:</strong><br>
+            GreenMINDAI Hackathon Catania
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 Ecology Catania. Tutti i diritti riservati.
+    </div>
+</footer>
+</html>

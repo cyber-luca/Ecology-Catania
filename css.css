@@ -1,0 +1,159 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fb;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    text-align: center;
+    color: #222;
+    margin-top: 30px;
+    margin-bottom: 18px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    font-size: 2.8rem;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    text-shadow: 0 2px 12px rgba(184,255,0,0.10);
+}
+#map {
+    width: 90vw;
+    height: 70vh;
+    margin: 0 auto 30px auto;
+    display: block;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    border: 1px solid #e0e0e0;
+}
+/* Modernizza la barra di ricerca */
+.leaflet-control-geocoder {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    border: none !important;
+    background: #fff !important;
+    padding: 6px 10px !important;
+}
+.leaflet-control-geocoder-form input {
+    border-radius: 8px !important;
+    border: 1px solid #d1d5db !important;
+    padding: 7px 12px !important;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+}
+.leaflet-control-geocoder-form input:focus {
+    border: 1.5px solid #0078ff !important;
+}
+/* Popup moderni */
+.leaflet-popup-content-wrapper {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    font-size: 1rem;
+}
+.leaflet-popup-content {
+    color: #222;
+    font-weight: 500;
+    padding: 8px 12px;
+}
+/* Pulsanti di zoom più moderni */
+.leaflet-control-zoom a {
+    border-radius: 8px !important;
+    background: #fff !important;
+    color: #0078ff !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 1.3rem;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 10px !important; /* aumenta la distanza */
+}
+.leaflet-control-zoom a:last-child {
+    margin-bottom: 0 !important;
+}
+.leaflet-control-zoom a:hover {
+    background: #0078ff !important;
+    color: #fff !important;
+}
+header {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.navbar {
+    background: linear-gradient(90deg, #bfff00 0%, #a8ff78 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222;
+    letter-spacing: 1px;
+}
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+.navbar-links li a {
+    color: #222;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+.navbar-links li a:hover {
+    background: #eaffd0;
+    color: #388e3c;
+}
+.footer {
+    background: linear-gradient(90deg, #bfff00 0%, #a8ff78 100%);
+    color: #222;
+    padding: 30px 0 10px 0;
+    margin-top: 40px;
+    font-size: 1rem;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+}
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto 10px auto;
+    gap: 30px;
+}
+.footer-section {
+    min-width: 220px;
+    margin-bottom: 10px;
+}
+.footer-social {
+    display: flex;
+    align-items: center;
+    color: #222;
+    text-decoration: none;
+    margin-top: 6px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.footer-social:hover {
+    color: #388e3c;
+}
+.footer-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.footer-bottom {
+    text-align: center;
+    color: #222;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    opacity: 0.8;
+}
