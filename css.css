@@ -235,59 +235,105 @@ header {
 
 /* Telefono extra-small: max-width 400px */
 @media (max-width: 400px) {
+    html, body {
+        width: 100vw;
+        min-width: 100vw;
+        overflow-x: hidden;
+        font-size: 0.95rem;
+        background: #f4f6fb;
+    }
     body {
-        font-size: 0.96rem;
+        margin: 0;
+        padding: 0;
     }
     #map {
-        width: 100vw;
-        height: 32vh;
-        min-height: 160px;
+        width: 98vw;
+        height: 28vh;
+        min-height: 120px;
+        border-radius: 10px;
+        margin-bottom: 16px;
     }
     .navbar {
         flex-direction: column;
         height: auto;
-        padding: 8px 2px;
+        padding: 6px 2px;
         text-align: center;
+        min-width: 0;
+        box-sizing: border-box;
     }
     .navbar-logo {
-        font-size: 1rem;
-        margin-bottom: 6px;
+        font-size: 0.98rem;
+        margin-bottom: 4px;
+        word-break: break-all;
     }
     .navbar-links {
         flex-direction: column;
-        gap: 5px;
+        gap: 4px;
+        width: 100%;
+        padding: 0;
+    }
+    .navbar-links li {
+        width: 100%;
+        text-align: center;
     }
     .navbar-links li a {
-        font-size: 0.98rem;
-        padding: 7px 0;
+        font-size: 0.96rem;
+        padding: 6px 0;
+        display: block;
+        width: 100%;
     }
-    h1 {
-        font-size: 1.05rem;
-        margin-top: 12px;
-        margin-bottom: 8px;
+    h1, h1[style] {
+        font-size: 1rem !important;
+        margin-top: 9px !important;
+        margin-bottom: 7px !important;
+        word-break: break-word;
+        line-height: 1.1;
     }
     main section, .footer-content {
         max-width: 99vw !important;
-        padding: 0 2vw;
+        padding: 0 1vw;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+    main section p,
+    main section [style*="font-size"] {
+        font-size: 0.98rem !important;
+        line-height: 1.25;
+        word-break: break-word;
+    }
+    a, button {
+        font-size: 0.98rem !important;
+        padding: 10px 16px !important;
+        min-width: 60vw;
     }
     .footer-content {
         flex-direction: column;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
     .footer-section {
         min-width: unset;
-        font-size: 0.93rem;
+        font-size: 0.92rem;
         text-align: center;
+        margin-bottom: 4px;
+        word-break: break-word;
     }
     .footer {
-        padding: 10px 0 4px 0;
-        font-size: 0.93rem;
+        padding: 8px 0 3px 0;
+        font-size: 0.92rem;
+        box-sizing: border-box;
     }
     .footer-bottom {
-        font-size: 0.88rem;
+        font-size: 0.85rem;
+        margin-top: 5px;
     }
-    a, button {
-        font-size: 1rem !important;
+    .footer-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
     }
 }
