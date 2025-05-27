@@ -86,7 +86,8 @@ header {
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 .navbar-logo {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    margin-bottom: 6px;
     font-weight: bold;
     color: #222;
     letter-spacing: 1px;
@@ -250,7 +251,7 @@ header {
         text-align: center;
     }
     .navbar-logo {
-        font-size: 1rem;
+        font-size: 1.35rem;
         margin-bottom: 6px;
     }
     .navbar-links {
