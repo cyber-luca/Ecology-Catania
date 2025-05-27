@@ -157,3 +157,137 @@ header {
     margin-top: 10px;
     opacity: 0.8;
 }
+/* Tablet: max-width 1024px */
+@media (max-width: 1024px) {
+    #map {
+        width: 98vw;
+        height: 55vh;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+    }
+    .navbar {
+        padding: 0 18px;
+    }
+    .navbar-links {
+        gap: 18px;
+    }
+    h1 {
+        font-size: 2.1rem;
+    }
+}
+
+/* Telefono: max-width 600px */
+@media (max-width: 600px) {
+    #map {
+        width: 100vw;
+        height: 40vh;
+        min-height: 260px;
+    }
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 6px;
+        text-align: center;
+    }
+    .navbar-logo {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    .navbar-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .navbar-links li a {
+        font-size: 1rem;
+        padding: 8px 0;
+        display: block;
+    }
+    h1 {
+        font-size: 1.3rem;
+        margin-top: 18px;
+        margin-bottom: 10px;
+    }
+    main section, .footer-content {
+        max-width: 98vw !important;
+        padding: 0 4vw;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .footer-section {
+        min-width: unset;
+        font-size: 0.98rem;
+        text-align: center;
+    }
+    .footer {
+        padding: 18px 0 6px 0;
+        font-size: 0.98rem;
+    }
+    .footer-bottom {
+        font-size: 0.92rem;
+    }
+}
+
+/* Telefono extra-small: max-width 400px */
+@media (max-width: 400px) {
+    body {
+        font-size: 0.96rem;
+    }
+    #map {
+        width: 100vw;
+        height: 32vh;
+        min-height: 160px;
+    }
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 8px 2px;
+        text-align: center;
+    }
+    .navbar-logo {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    .navbar-links {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .navbar-links li a {
+        font-size: 0.98rem;
+        padding: 7px 0;
+    }
+    h1 {
+        font-size: 1.05rem;
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+    main section, .footer-content {
+        max-width: 99vw !important;
+        padding: 0 2vw;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+    .footer-section {
+        min-width: unset;
+        font-size: 0.93rem;
+        text-align: center;
+    }
+    .footer {
+        padding: 10px 0 4px 0;
+        font-size: 0.93rem;
+    }
+    .footer-bottom {
+        font-size: 0.88rem;
+    }
+    a, button {
+        font-size: 1rem !important;
+    }
+}
