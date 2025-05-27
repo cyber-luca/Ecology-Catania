@@ -246,94 +246,123 @@ header {
         margin: 0;
         padding: 0;
     }
-    #map {
-        width: 98vw;
-        height: 28vh;
-        min-height: 120px;
-        border-radius: 10px;
-        margin-bottom: 16px;
+    header {
+        width: 100vw;
+        margin-bottom: 8px;
     }
     .navbar {
         flex-direction: column;
-        height: auto;
-        padding: 6px 2px;
-        text-align: center;
+        align-items: center;
+        padding: 5px 0 2px 0;
         min-width: 0;
         box-sizing: border-box;
+        width: 100vw;
     }
     .navbar-logo {
-        font-size: 0.98rem;
-        margin-bottom: 4px;
+        font-size: 1.05rem;
+        margin-bottom: 1px;
+        text-align: center;
         word-break: break-all;
+        width: 98vw;
     }
     .navbar-links {
+        width: 100vw;
         flex-direction: column;
-        gap: 4px;
-        width: 100%;
+        gap: 0;
         padding: 0;
+        margin: 0;
+        align-items: center;
     }
     .navbar-links li {
-        width: 100%;
+        width: 100vw;
         text-align: center;
     }
     .navbar-links li a {
-        font-size: 0.96rem;
-        padding: 6px 0;
+        font-size: 0.98rem;
+        padding: 10px 0;
         display: block;
-        width: 100%;
+        width: 100vw;
+        border-radius: 0;
+        background: none;
+        border-bottom: 1px solid #eaffd0;
+        margin: 0;
+    }
+    .navbar-links li:last-child a {
+        border-bottom: none;
+    }
+    main section {
+        max-width: 98vw !important;
+        padding: 8px 1vw 0 1vw;
+        margin: 0 auto;
+        box-sizing: border-box;
+        text-align: center;
     }
     h1, h1[style] {
-        font-size: 1rem !important;
-        margin-top: 9px !important;
-        margin-bottom: 7px !important;
+        font-size: 1.1rem !important;
+        margin-top: 6px !important;
+        margin-bottom: 5px !important;
         word-break: break-word;
         line-height: 1.1;
+        letter-spacing: 0.5px;
     }
-    main section, .footer-content {
-        max-width: 99vw !important;
-        padding: 0 1vw;
-        box-sizing: border-box;
-        margin: 0 auto;
-    }
-    main section p,
-    main section [style*="font-size"] {
+    .main-claim, main section p {
         font-size: 0.98rem !important;
+        margin: 8px 0 4px 0 !important;
         line-height: 1.25;
         word-break: break-word;
     }
-    a, button {
-        font-size: 0.98rem !important;
-        padding: 10px 16px !important;
-        min-width: 60vw;
+    .main-button, a[style*="inline-block"] {
+        display: block !important;
+        width: 92vw !important;
+        margin: 16px auto 0 auto !important;
+        font-size: 1rem !important;
+        padding: 13px 0 !important;
+        border-radius: 8px !important;
+        min-width: 0;
+        max-width: 98vw;
+        text-align: center;
+    }
+    #map {
+        width: 98vw;
+        height: 24vh;
+        min-height: 90px;
+        border-radius: 8px;
+        margin: 8px auto 12px auto;
+        display: block;
     }
     .footer-content {
         flex-direction: column;
         align-items: center;
-        gap: 5px;
-        width: 100%;
+        gap: 2px;
+        width: 100vw;
         padding: 0;
         margin: 0 auto;
         box-sizing: border-box;
     }
     .footer-section {
         min-width: unset;
-        font-size: 0.92rem;
+        font-size: 0.91rem;
         text-align: center;
-        margin-bottom: 4px;
-        word-break: break-word;
-    }
-    .footer {
-        padding: 8px 0 3px 0;
-        font-size: 0.92rem;
-        box-sizing: border-box;
-    }
-    .footer-bottom {
-        font-size: 0.85rem;
+        margin-bottom: 3px;
         margin-top: 5px;
+        word-break: break-word;
+        width: 95vw;
     }
     .footer-icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+        vertical-align: middle;
+    }
+    .footer {
+        padding: 7px 0 2px 0;
+        font-size: 0.91rem;
+        box-sizing: border-box;
+        width: 100vw;
+    }
+    .footer-bottom {
+        font-size: 0.82rem;
+        margin-top: 4px;
+        width: 100vw;
     }
 }
