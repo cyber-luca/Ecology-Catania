@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <!-- Leaflet Pegman CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-pegman@1.0.0/leaflet-pegman.css" />
+    <!-- Leaflet-Geosearch CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.1.0/dist/geosearch.css" />
     <!-- Il tuo CSS personalizzato -->
     <link rel="stylesheet" href="css.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:700,800&display=swap" rel="stylesheet">
@@ -20,22 +22,39 @@
         body {
             background: #eaffd0;
         }
+        @media (max-width: 400px) {
+            /* ...altro codice... */
+            #route-info {
+                display: block;
+                max-width: 98vw;
+                margin: 80px auto 0 auto; /* aumenta ancora il margine superiore */
+            }
+        }
     </style>
 </head>
 <body>
 <header>
     <nav class="navbar">
-        <div class="navbar-logo">CTGreenUp</div>
-        <ul class="navbar-links">
+        <div class="navbar-logo">
+            <img src="CTGreenUp.png" alt="CTGreenUp" class="navbar-logo-img">
+        </div>
+        <div class="navbar-hamburger" id="navbar-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="navbar-links" id="navbar-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="#">Chi siamo</a></li>
             <li><a href="#">Contatti</a></li>
             <li><a href="#">Servizi</a></li>
+            
         </ul>
     </nav>
 </header>
-    <h1>Mappa Percorsi</h1>
+    <h1>Mappa Cestini Smart</h1>
     <div id="map"></div>
+    <div id="route-info"></div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -45,6 +64,8 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <!-- Leaflet Pegman JS -->
     <script src="https://unpkg.com/leaflet-pegman@1.0.0/leaflet-pegman.js"></script>
+    <!-- Leaflet-Geosearch JS -->
+    <script src="https://unpkg.com/leaflet-geosearch@3.1.0/dist/bundle.min.js"></script>
 
     <script>
         // Creazione della mappa e centro su Catania
@@ -89,12 +110,12 @@
         })
         .addTo(map);
 
-        // Dati delle fermate della metro (coordinate indicative)
+        // Dati delle fermate della metro (solo quelle che c'erano prima, con coordinate reali)
         var metroStops = [
-            { name: "Stesicoro", lat: 37.5070, lon: 15.0835 },
-            { name: "Giovanni XXIII", lat: 37.5085, lon: 15.0850 },
-            { name: "Galatea", lat: 37.5095, lon: 15.0870 },
-            { name: "Giuffrida", lat: 37.5100, lon: 15.0890 }
+            { name: "Stesicoro",      lat: 37.507693, lon: 15.087124 }, // Piazza Stesicoro
+            { name: "Giovanni XXIII", lat: 37.512122, lon: 15.087847 }, // Piazza Giovanni XXIII
+            { name: "Galatea",        lat: 37.517011, lon: 15.080607 }, // Piazza Galatea
+            { name: "Giuffrida",      lat: 37.520109, lon: 15.079095 }  // Viale Giuffrida
         ];
 
         // Aggiungi un marker per ogni fermata della metro con un "cestino"
@@ -120,14 +141,109 @@
                 // Centra la mappa sulla posizione dell'utente
                 map.setView([userLat, userLon], 13);
 
-                // Calcola il percorso più breve per il primo cestino
-                L.Routing.control({
+                let routingCar, routingFoot;
+
+                function mostraPercorsoCar() {
+                    if (routingFoot) {
+                        map.removeControl(routingFoot);
+                        routingFoot = null;
+                    }
+                    if (routingCar) {
+                        map.removeControl(routingCar);
+                        routingCar = null;
+                    }
+                    routingCar = L.Routing.control({
+                        waypoints: [
+                            L.latLng(userLat, userLon),
+                            L.latLng(metroStops[0].lat, metroStops[0].lon)
+                        ],
+                        router: L.Routing.osrmv1({ profile: 'car' }),
+                        addWaypoints: false,
+                        draggableWaypoints: false,
+                        fitSelectedRoutes: true,
+                        show: true,
+                        lineOptions: { styles: [{color: 'red', weight: 5}] }
+                    }).addTo(map);
+                }
+
+                function mostraPercorsoFoot() {
+                    if (routingCar) {
+                        map.removeControl(routingCar);
+                        routingCar = null;
+                    }
+                    if (routingFoot) {
+                        map.removeControl(routingFoot);
+                        routingFoot = null;
+                    }
+                    routingFoot = L.Routing.control({
+                        waypoints: [
+                            L.latLng(userLat, userLon),
+                            L.latLng(metroStops[0].lat, metroStops[0].lon)
+                        ],
+                        router: L.Routing.osrmv1({ profile: 'foot' }),
+                        addWaypoints: false,
+                        draggableWaypoints: false,
+                        fitSelectedRoutes: true,
+                        show: true,
+                        lineOptions: { styles: [{color: '#0078ff', weight: 4, dashArray: '6, 8'}] }
+                    }).addTo(map);
+                }
+
+                // Box info con click handler
+                var infoDiv = document.getElementById('route-info');
+                infoDiv.style.display = 'block';
+                infoDiv.innerHTML =
+                    '<div id="car-box" style="cursor:pointer;background:#fff;border-radius:10px;padding:14px 10px;margin:40px 0 0 0;box-shadow:0 2px 8px rgba(0,0,0,0.08);color:#222;">' +
+                    '<strong>Percorso più vicino (in macchina):</strong><br>' +
+                    'Distanza: -- km<br>' +
+                    'Durata: -- min' +
+                    '</div>' +
+                    '<div id="foot-box" style="cursor:pointer;background:#fff;border-radius:10px;padding:14px 10px;margin:18px 0 0 0;box-shadow:0 2px 8px rgba(0,0,0,0.08);color:#222;">' +
+                    '<strong>Percorso più vicino (a piedi - stima):</strong><br>' +
+                    'Distanza: -- km<br>' +
+                    'Durata stimata: -- min' +
+                    '</div>';
+
+                // Calcola i dati reali solo una volta (puoi anche aggiornarli dopo il primo click)
+                var routingTemp = L.Routing.control({
                     waypoints: [
                         L.latLng(userLat, userLon),
                         L.latLng(metroStops[0].lat, metroStops[0].lon)
                     ],
-                    routeWhileDragging: true
+                    router: L.Routing.osrmv1({ profile: 'car' }),
+                    addWaypoints: false,
+                    draggableWaypoints: false,
+                    fitSelectedRoutes: true,
+                    show: false
                 }).addTo(map);
+
+                routingTemp.on('routesfound', function(e) {
+                    var summary = e.routes[0].summary;
+                    var tempoPiedi = stimaTempoAPiedi(summary.totalDistance);
+                    document.getElementById('car-box').innerHTML =
+                        '<strong>Percorso più vicino (in macchina):</strong><br>' +
+                        'Distanza: ' + (summary.totalDistance / 1000).toFixed(2) + ' km<br>' +
+                        'Durata: ' + Math.round(summary.totalTime / 60) + ' min';
+                    document.getElementById('foot-box').innerHTML =
+                        '<strong>Percorso più vicino (a piedi - stima):</strong><br>' +
+                        'Distanza: ' + (summary.totalDistance / 1000).toFixed(2) + ' km<br>' +
+                        'Durata stimata: ' + tempoPiedi + ' min';
+                    map.removeControl(routingTemp);
+                });
+
+                // Click handler
+                infoDiv.onclick = function(e) {
+                    if (e.target.closest('#car-box')) {
+                        mostraPercorsoCar();
+                    } else if (e.target.closest('#foot-box')) {
+                        mostraPercorsoFoot();
+                    }
+                };
+
+                // NON mostrare il box info per il percorso a piedi!
+                // Quindi puoi rimuovere o commentare questo blocco:
+                // routingFoot.on('routesfound', function(e) { ... });
+
             });
         } else {
             alert("Geolocalizzazione non supportata");
@@ -137,6 +253,13 @@
         var pegman = new L.Pegman({
             position: 'bottomleft'
         }).addTo(map);
+
+        // Calcola tempo stimato a piedi (media 5 km/h)
+        function stimaTempoAPiedi(distanzaMetri) {
+            var distanzaKm = distanzaMetri / 1000;
+            var tempoMinuti = Math.round((distanzaKm / 5) * 60); // 5 km/h
+            return tempoMinuti;
+        }
     </script>
 </body>
 <footer class="footer">

@@ -23,6 +23,17 @@ h1 {
     border-radius: 18px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
     border: 1px solid #e0e0e0;
+    position: relative;
+}
+#map.fullscreen {
+    position: fixed !important;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1000;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
 }
 /* Modernizza la barra di ricerca */
 .leaflet-control-geocoder {
@@ -77,36 +88,47 @@ header {
     margin-bottom: 20px;
 }
 .navbar {
-    background: linear-gradient(90deg, #7ec850 0%, #b7e091 100%);
+    background: #2e7d32;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
-    height: 60px;
+    padding: 0 60px;              /* aumentato */
+    height: 80px;                 /* aumentato */
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 .navbar-logo {
-    font-size: 1.35rem;
+    font-size: 1.7rem;            /* aumentato */
     margin-bottom: 6px;
     font-weight: bold;
     color: #222;
     letter-spacing: 1px;
 }
+.navbar-logo-img {
+    height: 54px;                 /* aumentato */
+    width: auto;
+    display: block;
+    margin: 0 0 0 0;
+}
+@media (max-width: 600px) {
+    .navbar-logo-img {
+        height: 38px;             /* aumentato anche su mobile */
+    }
+}
 .navbar-links {
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 40px;                    /* aumentato */
     margin: 0;
     padding: 0;
 }
 .navbar-links li a {
-    color: #222;
+    color: #a8e063;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
+    font-weight: 600;             /* leggermente più bold */
+    font-size: 1.35rem;           /* aumentato */
     transition: color 0.2s;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 12px 20px;           /* aumentato */
+    border-radius: 8px;           /* aumentato */
 }
 .navbar-links li a:hover {
     background: #eaffd0;
@@ -115,9 +137,9 @@ header {
 .footer {
     background: linear-gradient(90deg, #7ec850 0%, #b7e091 100%);
     color: #222;
-    padding: 30px 0 10px 0;
+    padding: 44px 0 18px 0;      /* aumentato */
     margin-top: 40px;
-    font-size: 1rem;
+    font-size: 1.13rem;          /* aumentato */
     box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
 }
 .footer-content {
@@ -125,14 +147,14 @@ header {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: flex-start;
-    max-width: 1200px;
+    max-width: 1300px;           /* leggermente aumentato */
     margin: 0 auto 10px auto;
-    gap: 30px;
+    gap: 38px;                   /* aumentato */
 }
 .footer-section {
-    min-width: 220px;
-    margin-bottom: 10px;
-    line-height: 2.1; /* aumenta lo spazio verticale tra le righe */
+    min-width: 250px;            /* aumentato */
+    font-size: 1.13rem;          /* aumentato */
+    line-height: 2.2;
 }
 .footer-section:nth-child(3) {
     line-height: 2.1;
@@ -154,28 +176,56 @@ header {
     margin-top: 6px;
     font-weight: 500;
     transition: color 0.2s;
+    font-size: 1.09rem;        /* aumentato */
 }
 .footer-social:hover {
     color: #388e3c;
 }
 .footer-icon, .footer-sponsor-logo {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    vertical-align: middle;
+    width: 32px;                 /* aumentato */
+    height: 32px;                /* aumentato */
+    margin-right: 10px;
 }
 .footer-sponsor-logo {
-    width: 38px;
-    height: 38px;
+    width: 48px;                 /* aumentato */
+    height: 48px;                /* aumentato */
     object-fit: contain;
-    margin-right: 6px;
+    margin-right: 8px;
 }
 .footer-bottom {
     text-align: center;
     color: #222;
-    font-size: 0.95rem;
-    margin-top: 10px;
-    opacity: 0.8;
+    font-size: 1.08rem;          /* aumentato */
+    margin-top: 18px;
+    opacity: 0.85;
+}
+#route-info {
+    display: block;
+    max-width: 98vw;
+    margin: 40px auto 0 auto; /* aumenta il margine superiore */
+}
+#route-info.fullscreen-info {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 1001;
+    max-width: 95vw;
+    width: 420px;
+}
+#fullscreen-exit {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 1002;
+    background: #fff;
+    color: #0078ff;
+    border: 2px solid #0078ff;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 /* Tablet: max-width 1024px */
 @media (max-width: 1024px) {
@@ -254,60 +304,139 @@ header {
 }
 
 /* Telefono extra-small: max-width 400px */
-@media (max-width: 400px) {
+@media (min-width: 400px) {
     body {
-        font-size: 0.96rem;
-    }
-    #map {
-        width: 100vw;
-        height: 32vh;
-        min-height: 160px;
-    }
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 8px 2px;
-        text-align: center;
-    }
-    .navbar-logo {
-        font-size: 1.35rem;
-        margin-bottom: 6px;
-    }
-    .navbar-links {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .navbar-links li a {
         font-size: 0.98rem;
-        padding: 7px 0;
     }
-    h1 {
-        font-size: 1.05rem;
-        margin-top: 12px;
-        margin-bottom: 8px;
-    }
-    main section, .footer-content {
+    .home-welcome-section {
+        margin: 28px auto 18px auto !important;
         max-width: 99vw !important;
         padding: 0 2vw;
     }
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
+    .home-welcome-section h1 {
+        font-size: 1rem !important;   /* ancora più piccolo */
+        margin-top: 8px;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
     }
-    .footer-section {
-        min-width: unset;
-        font-size: 0.93rem;
-        text-align: center;
+    .home-welcome-section p {
+        font-size: 1.08rem !important;
+        margin-top: 18px;
+        font-weight: 500;
+    }
+    .home-welcome-section p:first-of-type {
+        font-size: 1.22rem !important;
+    }
+    .home-welcome-section p + p {
+        font-size: 1.01rem !important;
+        margin-top: 14px;
+    }
+    .home-welcome-section a,
+    .cta-btn {
+        display: inline-block;
+        background: #7ec850;
+        color: #222;
+        font-weight: 700;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 0 4px 18px rgba(184,255,0,0.12);
+        transition: background 0.2s;
+    }
+    /* Per schermi da 400px in su */
+    @media (min-width: 400px) {
+        .home-welcome-section a,
+        .cta-btn {
+            font-size: 18px !important;
+            padding: 7px 18px !important;
+            margin-top: 14px !important;
+            min-width: 0 !important;
+            max-width: 90vw !important;
+            white-space: nowrap;
+        }
+        .navbar-logo-img {
+            height: 120px !important;      /* grande ma non eccessivo */
+            max-width: 95vw !important;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .home-welcome-section h1 {
+            font-size: 2rem !important;    /* titolo più piccolo e proporzionato */
+        }
+    }
+    .navbar-logo-img {
+        height: 54px !important;
+        max-width: 90vw !important;
+    }
+}
+@media (min-width: 1080px) {
+    body {
+        font-size: 1.12rem;
+    }
+    .navbar {
+        height: 110px;
+        padding: 0 120px;
+    }
+    .navbar-logo-img {
+        height: 110px !important;   /* più piccolo rispetto a prima */
+        max-width: 260px !important;
+        width: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    .navbar-links {
+        gap: 56px;
+    }
+    .navbar-links li a {
+        font-size: 1.35rem;
+        padding: 18px 36px;
+    }
+    .home-welcome-section {
+        margin: 90px auto 60px auto !important;
+        max-width: 950px !important;
+        padding: 0;
+    }
+    .home-welcome-section h1 {
+        font-size: 2.6rem !important;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        letter-spacing: 2.5px;
+    }
+    .home-welcome-section p {
+        font-size: 1.45rem !important;
+        margin-top: 38px;
+    }
+    .home-welcome-section p:first-of-type {
+        font-size: 1.7rem !important;
+    }
+    .home-welcome-section a,
+    .cta-btn {
+        font-size: 1.22rem !important;
+        padding: 18px 60px !important;
+        margin-top: 44px !important;
+        border-radius: 14px;
     }
     .footer {
-        padding: 10px 0 4px 0;
-        font-size: 0.93rem;
+        padding: 70px 0 36px 0;
+        font-size: 1.22rem;
+    }
+    .footer-content {
+        max-width: 1600px;
+        gap: 80px;
+    }
+    .footer-section {
+        min-width: 350px;
+        font-size: 1.22rem;
+    }
+    .footer-social {
+        font-size: 1.18rem;
+    }
+    .footer-icon, .footer-sponsor-logo {
+        width: 54px;
+        height: 54px;
     }
     .footer-bottom {
-        font-size: 0.88rem;
-    }
-    a, button {
-        font-size: 1rem !important;
+        font-size: 1.18rem;
+        margin-top: 36px;
     }
 }
