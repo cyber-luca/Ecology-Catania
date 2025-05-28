@@ -441,6 +441,7 @@ header {
     }
 }
 @media (min-width: 350px) and (max-width: 399.98px) {
+    .home-welcome-section a,
     .cta-btn {
         font-size: 18px !important;
         padding: 7px 18px !important;
