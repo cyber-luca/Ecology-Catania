@@ -45,9 +45,10 @@
         </div>
         <ul class="navbar-links" id="navbar-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#">Chi siamo</a></li>
-            <li><a href="#">Contatti</a></li>
-            <li><a href="#">Servizi</a></li>
+            <li><a href="https://www.figma.com/proto/NQcw8WUNWNvFGgsBiqgVbd/Untitled?node-id=16-681&t=Ul3Lw1RGIAwIFOhy-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=9%3A136&show-proto-sidebar=1">Vai all'app</a></li>
+            <li><a href="chi siamo.html">Chi siamo</a></li>            
+            <li><a href="Differenzia Bene.html">Differenzia Bene</a></li>
+            <li><a href="Contatti.html">Contatti</a></li>
             
         </ul>
     </nav>
@@ -261,6 +262,26 @@
             return tempoMinuti;
         }
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const hamburger = document.getElementById('navbar-hamburger');
+    const links = document.getElementById('navbar-links');
+
+    if (hamburger && links) {
+        hamburger.addEventListener("click", function(e) {
+            e.stopPropagation();
+            links.classList.toggle("active");
+        });
+
+        // Chiudi il menu quando clicchi fuori
+        document.addEventListener("click", function(e) {
+            if (!hamburger.contains(e.target) && !links.contains(e.target)) {
+                links.classList.remove("active");
+            }
+        });
+    }
+});
+</script>
 </body>
 <footer class="footer">
     <div class="footer-content">

@@ -458,4 +458,182 @@ header {
         box-shadow: 0 4px 18px rgba(184,255,0,0.12);
         transition: background 0.2s;
     }
+    .navbar-logo-img {
+        height: 70px !important;
+        max-width: 95vw !important;
+        display: block;
+        margin-left: 60px !important;   /* sposta il logo più a destra */
+        margin-right: auto !important;
+    }
+}
+
+/* Nascondi hamburger di default */
+.navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    z-index: 102;
+    background: #388e3c;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: background 0.2s;
+}
+.navbar-hamburger:hover {
+    background: #2e7d32;
+}
+.navbar-hamburger span {
+    display: block;
+    width: 26px;
+    height: 4px;
+    margin: 4px 0;
+    background: #fff;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Mostra hamburger solo tra 350px e 400px */
+@media (min-width: 350px) and (max-width: 399.98px) {
+    .navbar-hamburger {
+        display: flex;
+    }
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 70px;
+        background: #2e7d32;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+        padding: 18px 28px;
+        z-index: 100;
+    }
+    .navbar-links.active {
+        display: flex;
+    }
+}
+
+/* Mostra hamburger anche da 400px in poi (puoi regolare il max-width se vuoi solo su mobile) */
+@media (min-width: 400px) and (max-width: 800px) {
+    .navbar-hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        justify-content: center;
+        align-items: center;
+        z-index: 101;
+    }
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 70px;
+        background: #2e7d32;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+        padding: 18px 28px;
+        z-index: 100;
+    }
+    .navbar-links.active {
+        display: flex;
+    }
+}
+
+/* Hamburger in alto a sinistra tra 350px e 800px */
+@media (min-width: 350px) and (max-width: 800px) {
+    .navbar-hamburger {
+        position: absolute;
+        left: 18px;
+        top: 18px;
+        right: auto;
+        margin: 0;
+        z-index: 102;
+    }
+    .navbar-links {
+        left: 62px; /* distanza dal bordo sinistro, subito dopo l'hamburger */
+        right: auto;
+        top: 18px;
+        position: absolute;
+        /* il resto delle tue regole rimane invariato */
+    }
+    .navbar-links.active {
+        display: flex;
+    }
+}
+
+/* Da 400px a 500px: logo poco più a destra */
+@media (min-width: 400px) and (max-width: 499.98px) {
+    .navbar-logo-img {
+        margin-left: 40px !important;
+        margin-right: auto !important;
+        display: block;
+    }
+}
+
+/* Da 600px a 800px: logo perfettamente centrato */
+@media (min-width: 600px) and (max-width: 800px) {
+    .navbar-logo-img {
+        display: block;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Da 400px in poi: solo dimensioni, NO margin */
+@media (min-width: 400px) {
+    .navbar-logo-img {
+        height: 90px !important;
+        max-width: 70vw !important;
+        width: auto;
+        display: block;
+        /* niente margin qui! */
+    }
+}
+@media (min-width: 600px) and (max-width: 800px) {
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .navbar-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 1 100%;
+    }
+    .navbar-logo-img {
+        margin: 0 !important;
+    }
+    .navbar-hamburger,
+    .navbar-links {
+        position: absolute;
+    }
+}
+.team-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 420px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.team-list li {
+    width: 100%;
+    text-align: left;
+    font-size: 1.13rem;
+    margin-bottom: 18px;
+    letter-spacing: 0.2px;
+}
+.team-list li:last-child {
+    margin-bottom: 0;
 }
